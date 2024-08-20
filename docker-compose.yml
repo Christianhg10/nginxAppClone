@@ -37,6 +37,20 @@ services:
       LETSENCRYPT_HOST: ${domain}
       LETSENCRYPT_EMAIL: ${email}
 
+  video-converter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: video-converter
+    restart: always
+    networks:
+      - red
+    volumes:
+      - ./uploads:/app/uploads
+      - ./hls:/app/hls
+    ports:
+      - "3001:3001"
+
 networks:
   red:
     driver: "bridge"
