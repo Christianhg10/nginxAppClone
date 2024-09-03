@@ -33,8 +33,8 @@ services:
       - ./web/public:/opt/nginx/html:ro
       - ./web/config:/opt/nginx/conf/
     environment:
-      VIRTUAL_HOST: ${domain}
-      LETSENCRYPT_HOST: ${domain}
+      VIRTUAL_HOST: livestream.${domain}
+      LETSENCRYPT_HOST: livestream.${domain}
       LETSENCRYPT_EMAIL: ${email}
 
   video-converter:
@@ -47,9 +47,13 @@ services:
       - red
     volumes:
       - ./uploads:/app/uploads
-      - ./hls:/app/hls
+      - ./hls:/app/public/hls
     ports:
       - "3001:3001"
+    environment:
+      VIRTUAL_HOST: video-converter.${domain}
+      LETSENCRYPT_HOST: video-converter.${domain}
+      LETSENCRYPT_EMAIL: ${email}
 
 networks:
   red:
